@@ -1,24 +1,53 @@
 [
   {
-    "name": "L3",
-    "type": "floating",
-    "minval": 0,
-    "maxval": 11.5
-  },
-  {
-    "name":"M1",
+    "name":"M",
     "type":"discrete",
     "values":[1,2,3,4,5,6]
   },
   {
-    "name":"M2",
+    "name":"M4",
     "type":"discrete",
-    "values":[1,2,3,4,5,6]
+    "values":[0,1]
+  },
+  {
+    "name":"M5",
+    "type":"discrete",
+    "values":[1,2,3]
+  },
+  {
+    "name":"M6",
+    "type":"discrete",
+    "values":[-1,1]
   },
   {
     "name":"L",
-    "type":"discrete",
-    "values":[7,8,9,10]
+    "type":"discrete_range",
+    "minval":7,
+    "maxval":10
+  },
+  {
+    "name":"L7",
+    "type":"floating",
+    "minval":-70,
+    "maxval":70
+  },
+  {
+    "name":"L8",
+    "type":"floating",
+    "minval":-3,
+    "maxval":3
+  },
+  {
+    "name":"L9",
+    "type":"floating",
+    "minval":-5,
+    "maxval":5
+  },
+  {
+    "name":"L10",
+    "type":"floating",
+    "minval":-2.5,
+    "maxval":2.5
   },
   {
     "name":"J",
