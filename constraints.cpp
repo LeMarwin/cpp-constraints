@@ -10,6 +10,7 @@
 using json = nlohmann::json;
 using namespace std;
 
+
 class AbstractConstraint
 {
   public:
@@ -18,6 +19,8 @@ class AbstractConstraint
     AbstractConstraint(){};
     virtual ~AbstractConstraint(){};
 };
+
+using ConstrMap = map<string, AbstractConstraint*>;
 
 class DiscreteConstraint: public AbstractConstraint
 {
@@ -122,7 +125,7 @@ vector<int> jsonToVec(json j){
   return v;
 };
 
-map<string, AbstractConstraint*> readConstraints(string filename){
+ConstrMap readConstraints(string filename){
   map<string, AbstractConstraint*> res;
   json j;
   ifstream constraints_file(filename, ifstream::binary);
@@ -158,6 +161,19 @@ map<string, AbstractConstraint*> readConstraints(string filename){
 }
 
 
+template <typename T>
+T readWhile(string key, ConstrMap* cm){
+  T res;
+  cout << "Enter value for " << key << endl;
+  cin >> res;
+  while(!cm->at(key)->check(res)){
+    cout << "Incorrect value for " << key << ". Try again." << endl;
+    cin >> res;
+  }
+  return res;
+}
+
+
 /*
 int main(int argc, char const *argv[])
 {
@@ -183,3 +199,5 @@ int main(int argc, char const *argv[])
   }
   return 0;
 }
+
+*/

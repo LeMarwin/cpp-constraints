@@ -9,9 +9,7 @@ using namespace std;
 int main(int argc, char const *argv[])
 {
 	auto m = readConstraints("constraints.json");
-
-	int i = 1;
-
-	cout << m.at("M1")->check(i) << endl;
+	int i = readWhile<int>("M1",&m);
+	cout << "You have entered: " << i << endl;
 	return 0;
 }
