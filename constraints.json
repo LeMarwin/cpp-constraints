@@ -1,0 +1,29 @@
+[
+  {
+    "name": "L3",
+    "type": "floating",
+    "minval": 0,
+    "maxval": 11.5
+  },
+  {
+    "name":"M1",
+    "type":"discrete",
+    "values":[1,2,3,4,5,6]
+  },
+  {
+    "name":"M2",
+    "type":"discrete",
+    "values":[1,2,3,4,5,6]
+  },
+  {
+    "name":"L",
+    "type":"discrete",
+    "values":[7,8,9,10]
+  },
+  {
+    "name":"J",
+    "type":"discrete_range",
+    "minval":11,
+    "maxval":90
+  }
+]
