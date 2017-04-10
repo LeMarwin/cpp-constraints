@@ -13,4 +13,5 @@ struct Config
   int l;
   int n;
   double b[6];
+  double targetY;
 };

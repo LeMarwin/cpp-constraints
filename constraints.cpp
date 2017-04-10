@@ -162,7 +162,7 @@ ConstrMap readConstraints(string filename){
 
 
 template <typename T>
-T readWhile(string key, ConstrMap* cm){
+T readWhileConstraint(string key, ConstrMap* cm){
   T res;
   cout << "Enter value for " << key << endl;
   cin >> res;
