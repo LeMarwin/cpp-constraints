@@ -1,15 +1,15 @@
 #include "iostream"
-#include "climits"
-#include "vector"
-#include <math.h>
-#include "constraints.cpp"
+#include "configManager.cpp"
 
 using namespace std;
 
 int main(int argc, char const *argv[])
 {
-	auto m = readConstraints("constraints.json");
-	int i = readWhileConstraint<int>("M1",&m);
-	cout << "You have entered: " << i << endl;
+	//Считывает все входные данные с консоли
+	//auto cnf = readConfigFromCommandLine("constraints.json");
+
+	//Читает все входные данные из json-файла
+	auto cnf = readConfigJson("default_config.json", "constraints.json");
+
 	return 0;
 }

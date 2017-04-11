@@ -52,10 +52,48 @@ bool checkAllNums(json j){
   return false;
 }
 
-Config readConfigJson(string filename){
+bool validateConfig(Config cnf, string constraintsFile){
+  auto m = readConstraints(constraintsFile);
+
+  bool flag = true;
+
+  if(!m.at("M")->check(cnf.m1)){
+    flag = false;
+    cout << "Invalid value for M1" << endl
+         << m.at("M")->errorMsg() << endl;
+  }
+
+  if(!m.at("M")->check(cnf.m2)){
+    flag = false;
+    cout << "Invalid value for M2" << endl
+         << m.at("M")->errorMsg() << endl;
+  }
+
+  if(!m.at("L")->check(cnf.l)){
+    flag = false;
+    cout << "Invalid value for L" << endl
+         << m.at("L")->errorMsg() << endl;
+  }
+
+  if(!m.at("J")->check(cnf.j)){
+    flag = false;
+    cout << "Invalid value for J" << endl
+         << m.at("J")->errorMsg() << endl;
+  }
+
+  if(!m.at("N")->check(cnf.n)){
+    flag = false;
+    cout << "Invalid value for N" << endl
+         << m.at("N")->errorMsg() << endl;
+  }
+
+  return flag;
+}
+
+Config readConfigJson(string configFileName, string constraintsFileName){
   Config r;
   json j;
-  ifstream config_file(filename, ifstream::binary);
+  ifstream config_file(configFileName, ifstream::binary);
   config_file >> j;
   if(j.is_object()){
     
@@ -83,18 +121,19 @@ Config readConfigJson(string filename){
       }
     } else cout << "ERROR! Malformed B array!" << endl;
   } else cout << "ERROR! Malformed config object" << endl;
+  
+  if(!validateConfig(r, constraintsFileName)) cout << "ERROR! INVALID CONFIG!" << endl;
   return r;
 }
 
-
-int main(int argc, char const *argv[])
-{
-  //auto cnf = readConfigFromCommandLine("constraints.json");
-  auto cnf = readConfigJson("default_config.json");
-  cout << cnf.m1 << endl;
-  cout << cnf.m2 << endl;
-  cout << cnf.l << endl;
-  cout << cnf.n << endl;
-  cout << cnf.targetY << endl;
-  return 0;
-}
+//int main(int argc, char const *argv[])
+//{
+//  //auto cnf = readConfigFromCommandLine("constraints.json");
+//  auto cnf = readConfigJson("default_config.json", "constraints.json");
+//  cout << cnf.m1 << endl;
+//  cout << cnf.m2 << endl;
+//  cout << cnf.l << endl;
+//  cout << cnf.n << endl;
+//  cout << cnf.targetY << endl;
+//  return 0;
+//}
