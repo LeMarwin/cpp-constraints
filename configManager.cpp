@@ -1,3 +1,6 @@
+#ifndef CONFIG_MANAGER_CPP
+#define CONFIG_MANAGER_CPP
+
 #include "json.hpp"
 #include "iostream"
 #include "constraints.cpp"
@@ -137,3 +140,5 @@ Config readConfigJson(string configFileName, string constraintsFileName){
 //  cout << cnf.targetY << endl;
 //  return 0;
 //}
+
+#endif

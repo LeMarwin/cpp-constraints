@@ -1,4 +1,5 @@
 #include "iostream"
+#include "constraints.cpp"
 #include "configManager.cpp"
 
 using namespace std;
@@ -10,6 +11,6 @@ int main(int argc, char const *argv[])
 
 	//Читает все входные данные из json-файла
 	auto cnf = readConfigJson("default_config.json", "constraints.json");
-
+	
 	return 0;
 }

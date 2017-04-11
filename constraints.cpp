@@ -1,3 +1,6 @@
+#ifndef CONSTRAINTS_CPP
+#define CONSTRAINTS_CPP
+
 #include "climits"
 #include "vector"
 #include <math.h>
@@ -222,3 +225,5 @@ int main(int argc, char const *argv[])
 }
 
 */
+
+#endif
