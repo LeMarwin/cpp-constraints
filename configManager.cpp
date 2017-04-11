@@ -10,6 +10,7 @@
 using json = nlohmann::json;
 using namespace std;
 
+//Все входные данные программы (конфиг) в одном месте
 struct Config
 {
   int m1;
@@ -21,9 +22,14 @@ struct Config
   double targetY;
 };
 
+//Считывалка конфига из консоли
 Config readConfigFromCommandLine(string constraintsFile){
+  //Конечный конфиг
   Config r;
+  //Считываем множество ограничений
   auto m = readConstraints(constraintsFile);
+  
+
   r.m1 = readWhileConstraint<int>("M", &m);
   r.m2 = readWhileConstraint<int>("M", &m);
   
@@ -31,6 +37,7 @@ Config readConfigFromCommandLine(string constraintsFile){
     cout << "Error! M1 and M2 should be distinct. Try again!" << endl;
     r.m1 = readWhileConstraint<int>("M", &m);
   }
+
   r.l = readWhileConstraint<int>("L", &m);
   r.j = readWhileConstraint<int>("J", &m);
   r.n = readWhileConstraint<int>("N", &m);
@@ -45,6 +52,8 @@ Config readConfigFromCommandLine(string constraintsFile){
   return r;
 }
 
+//Вспомогательная функция, проверяющая что нам дан json-array 
+//В котором только числа
 bool checkAllNums(json j){
   if(j.is_array()){
     for(int i = 0; i < j.size(); i++){
@@ -55,6 +64,7 @@ bool checkAllNums(json j){
   return false;
 }
 
+//Проверяет что конфиг удовлетворяет ограничениям.
 bool validateConfig(Config cnf, string constraintsFile){
   auto m = readConstraints(constraintsFile);
 
@@ -63,41 +73,44 @@ bool validateConfig(Config cnf, string constraintsFile){
   if(!m.at("M")->check(cnf.m1)){
     flag = false;
     cout << "Invalid value for M1" << endl
-         << m.at("M")->errorMsg() << endl;
+         << m.at("M")->errorMsg()  << endl;
   }
 
   if(!m.at("M")->check(cnf.m2)){
     flag = false;
     cout << "Invalid value for M2" << endl
-         << m.at("M")->errorMsg() << endl;
+         << m.at("M")->errorMsg()  << endl;
   }
 
   if(!m.at("L")->check(cnf.l)){
     flag = false;
-    cout << "Invalid value for L" << endl
-         << m.at("L")->errorMsg() << endl;
+    cout << "Invalid value for L"  << endl
+         << m.at("L")->errorMsg()  << endl;
   }
 
   if(!m.at("J")->check(cnf.j)){
     flag = false;
-    cout << "Invalid value for J" << endl
-         << m.at("J")->errorMsg() << endl;
+    cout << "Invalid value for J"  << endl
+         << m.at("J")->errorMsg()  << endl;
   }
 
   if(!m.at("N")->check(cnf.n)){
     flag = false;
-    cout << "Invalid value for N" << endl
-         << m.at("N")->errorMsg() << endl;
+    cout << "Invalid value for N"  << endl
+         << m.at("N")->errorMsg()  << endl;
   }
 
   return flag;
 }
 
+
+//Считывалка конфига из json-файла
 Config readConfigJson(string configFileName, string constraintsFileName){
   Config r;
   json j;
   ifstream config_file(configFileName, ifstream::binary);
   config_file >> j;
+  
   if(j.is_object()){
     
     if(j["M1"].is_number()) r.m1 = j["M1"];

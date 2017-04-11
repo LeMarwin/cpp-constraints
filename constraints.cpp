@@ -17,15 +17,24 @@ using namespace std;
 class AbstractConstraint
 {
   public:
+    //Этот метод проверяет что значение удовлетворяет ограничению
     virtual bool check(double v) = 0;
+
+    //Этот метод подгоняет значение под ограничение
+    //Использовать при проверке выходного сигнала
     virtual double fit(double v) = 0;
+
+    //Этот метод описывает допустимые значения
     virtual string errorMsg() = 0;
+
     AbstractConstraint(){};
     virtual ~AbstractConstraint(){};
 };
 
+//Тип: "Множество пар (ключ,ограничение)""
 using ConstrMap = map<string, AbstractConstraint*>;
 
+//Ограничение вида: целочисленный список допустимых значений
 class DiscreteConstraint: public AbstractConstraint
 {
   private:
@@ -55,7 +64,7 @@ class DiscreteConstraint: public AbstractConstraint
       int dist = INT_MAX;
       for (int i = 0; i < values.size(); ++i)
       {
-        float tdist = abs(values[i] - v); 
+        double tdist = abs(values[i] - v); 
         if(tdist < dist)
         {
           dist = tdist;
@@ -77,6 +86,7 @@ class DiscreteConstraint: public AbstractConstraint
     }
 };
 
+//Ограничение вида: целочисленный диапазон допустимых значений
 class DiscreteRangeConstraint: public AbstractConstraint
 {
   private:
@@ -107,6 +117,7 @@ class DiscreteRangeConstraint: public AbstractConstraint
   }
 };
 
+//Ограничение вида: диапазон допустимых значений с плавающей запятой
 class FloatingConstraint: public AbstractConstraint
 {
   private:
@@ -135,6 +146,8 @@ class FloatingConstraint: public AbstractConstraint
     }
 };
 
+
+//Вспомогательная функция
 vector<int> jsonToVec(json j){
   vector<int> v;
   if(j.is_array()){
@@ -148,6 +161,8 @@ vector<int> jsonToVec(json j){
   return v;
 };
 
+
+//Функция, читающая ограничения из json-файла
 ConstrMap readConstraints(string filename){
   map<string, AbstractConstraint*> res;
   json j;
@@ -183,7 +198,9 @@ ConstrMap readConstraints(string filename){
   return res;
 }
 
-
+//Функция, запрашивающая значение из консоли 
+//Пока оно не будет удовлетворять ограничению
+//Т -- шаблонный тип. В нашем случае либо int, либо double
 template <typename T>
 T readWhileConstraint(string key, ConstrMap* cm){
   T res;
