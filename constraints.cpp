@@ -16,6 +16,7 @@ class AbstractConstraint
   public:
     virtual bool check(double v) = 0;
     virtual double fit(double v) = 0;
+    virtual string errorMsg() = 0;
     AbstractConstraint(){};
     virtual ~AbstractConstraint(){};
 };
@@ -60,6 +61,17 @@ class DiscreteConstraint: public AbstractConstraint
       }
       return static_cast<double>(res);
     }
+
+    string errorMsg(){
+      string str = "Value should be in: {";
+      for (int i : values)
+      {
+        str = str + to_string(i) + ",";
+      }
+      if(str.back() == ',') str.pop_back();
+      str+="}";
+      return str;
+    }
 };
 
 class DiscreteRangeConstraint: public AbstractConstraint
@@ -86,6 +98,10 @@ class DiscreteRangeConstraint: public AbstractConstraint
     if(v > maxval) return maxval;
     return v;
   }
+
+  string errorMsg(){
+    return "Value should be in [" + to_string(minval) + ", " + to_string(maxval) + "]";
+  }
 };
 
 class FloatingConstraint: public AbstractConstraint
@@ -109,6 +125,10 @@ class FloatingConstraint: public AbstractConstraint
       if(v < minval) return minval;
       if(v > maxval) return maxval;
       return v;
+    }
+
+    string errorMsg(){
+      return "Value should be in [" + to_string(minval) + ", " + to_string(maxval) + "]";
     }
 };
 
@@ -167,7 +187,8 @@ T readWhileConstraint(string key, ConstrMap* cm){
   cout << "Enter value for " << key << endl;
   cin >> res;
   while(!cm->at(key)->check(res)){
-    cout << "Incorrect value for " << key << ". Try again." << endl;
+    cout << "Incorrect value for " << key << "." << endl;
+    cout << cm->at(key)->errorMsg() << endl;
     cin >> res;
   }
   return res;
