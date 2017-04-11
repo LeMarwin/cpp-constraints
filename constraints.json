@@ -54,5 +54,11 @@
     "type":"discrete_range",
     "minval":11,
     "maxval":90
+  },
+  {
+    "name":"N",
+    "type":"discrete_range",
+    "minval":1,
+    "maxval":1000000
   }
 ]
