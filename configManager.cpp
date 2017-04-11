@@ -12,6 +12,7 @@ struct Config
   int m1;
   int m2;
   int l;
+  int j;
   int n;
   double b[6];
   double targetY;
@@ -28,6 +29,7 @@ Config readConfigFromCommandLine(string constraintsFile){
     r.m1 = readWhileConstraint<int>("M", &m);
   }
   r.l = readWhileConstraint<int>("L", &m);
+  r.j = readWhileConstraint<int>("J", &m);
   r.n = readWhileConstraint<int>("N", &m);
   
   for(int i = 0; i<6;i++){
@@ -66,6 +68,9 @@ Config readConfigJson(string filename){
     if(j["L"].is_number()) r.l = j["L"];
     else cout << "ERROR! L should be a number!" << endl;
 
+    if(j["J"].is_number()) r.j = j["J"];
+    else cout << "ERROR! J should be a number!" << endl;
+
     if(j["N"].is_number()) r.n = j["N"];
     else cout << "ERROR! N should be a number!" << endl;
 
@@ -80,6 +85,7 @@ Config readConfigJson(string filename){
   } else cout << "ERROR! Malformed config object" << endl;
   return r;
 }
+
 
 int main(int argc, char const *argv[])
 {
